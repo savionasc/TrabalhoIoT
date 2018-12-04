@@ -1,0 +1,72 @@
+airamenic - AIRAMENIC
+Teste da aplicação:
+
+Mobile
+Servidor
+Arduino
+
+
+Primeiro teste:
+Mobile -> Servidor  : mobile/login/savio
+Arduino -> Servidor : arduino/solicitar_chamado/beatriz
+Mobile -> Servidor  : mobile/encaminhar_chamado/beatriz
+Mobile -> Servidor  : mobile/confirmar_chamado/beatriz
+Mobile -> Servidor  : mobile/finalizar_chamado/beatriz
+Arduino -> Servidor : arduino/avaliar_chamado/satisfeito
+Mobile -> Servidor  : mobile/logout/savio
+
+Pontos a se testar:
+
+
+mosquitto_sub -h localhost -t mobile --username savio_u_mqtt --pw mqtt_senha
+mosquitto_sub -h localhost -t arduino --username savio_u_mqtt --pw mqtt_senha
+mosquitto_sub -h localhost -t servidor --username savio_u_mqtt --pw mqtt_senha
+
+
+
+mosquitto_pub -h localhost -t servidor -m "mobile/login/savio" --username savio_u_mqtt --pw mqtt_senha
+mosquitto_pub -h localhost -t servidor -m "arduino/solicitar_chamado/beatriz" --username savio_u_mqtt --pw mqtt_senha
+mosquitto_pub -h localhost -t servidor -m "mobile/encaminhar_chamado/beatriz" --username savio_u_mqtt --pw mqtt_senha
+mosquitto_pub -h localhost -t servidor -m "mobile/confirmar_chamado/beatriz" --username savio_u_mqtt --pw mqtt_senha
+mosquitto_pub -h localhost -t servidor -m "mobile/finalizar_chamado/beatriz" --username savio_u_mqtt --pw mqtt_senha
+mosquitto_pub -h localhost -t servidor -m "arduino/avaliar_chamado/satisfeito" --username savio_u_mqtt --pw mqtt_senha
+mosquitto_pub -h localhost -t servidor -m "mobile/logout/savio" --username savio_u_mqtt --pw mqtt_senha
+
+
+startsWith(../)
+arduino mostrar a qualquer momento:
+Urgencia:
+recebe "chamado_agendado" depois de "arduino/solicitar_chamado/beatriz"
+recebe "chamado_espera. Quarto: beatriz" depois de ""mobile/encaminhar_chamado/beatriz""
+recebe "confirmado_chamado/beatriz" depois de "arduino/confirmar_chamado/beatriz"
+recebe "chamado_finalizado/beatriz" depois de "arduino/finalizar_chamado/beatriz"
+
+
+Depois:
+chamado_encaminhado
+chamado_espera
+confirmado_chamado
+nenhum_funcionario
+avaliado_chamado
+chamado_finalizado
+quarto_ja_cadastrado
+
+
+startsWith(../)
+mobile mostrar a qualquer momento:
+Urgencia:
+funcionario_aceito/savio
+confirmado_chamado/beatriz
+chamado_finalizado/beatriz
+
+
+Depois:
+- chamado_desconhecido (mostrar msg)
+- chamado_em_andamento (mostrar msg)
+- confirmado_chamado (mudar cor do botão)
+- chamado_finalizado (mudar cor do botão)
+- funcionario_aceito (Abrir outra tela)
+- funcionario_recusado
+- funcionario_nao_encontrado
+- funcionario_retiradoservidor
+- avaliado_chamado
